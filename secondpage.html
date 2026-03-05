@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>收支明細 - 日常收支记账</title>
+    <!-- 引入 FontAwesome 圖標庫 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- 引入 Google Fonts (與首頁一致) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS 變數定義 (與首頁保持完全一致) --- */
+        :root {
+            --primary-color: #0284c7;       
+            --primary-dark: #0c4a6e;        
+            --secondary-bg: #f1f5f9;        
+            --text-main: #0f172a;           
+            --text-secondary: #475569;      
+            --danger-color: #ef4444; /* 負數紅色 */
+            --success-color: #10b981; /* 收入綠色 (雖然主題是藍色，但金錢通常用綠/紅區分) */
+            --white: #ffffff;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --radius: 12px;
+            --container-width: 800px; /* 列表頁面可以稍微窄一點，更聚焦 */
+        }
+
+        /* --- 基礎重置 --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', 'ZCOOL KuaiLe', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", cursive, sans-serif;
+        }
+
+        body {
+            color: var(--text-main);
+            background-color: var(--secondary-bg); /* 背景稍灰，突出卡片 */
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- 導航欄 (與首頁一致) --- */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        nav {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 20px;
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 400;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .logo i {
+            color: var(--primary-color);
+            transform: rotate(-10deg);
+        }
+
+        /* 3D 按鈕樣式 */
+        .btn-3d {
+            border: none;
+            cursor: pointer;
+            position: relative;
+            top: 0;
+            transition: all 0.1s ease;
+            display: inline-block;
+            text-align: center;
+            font-weight: 700;
+            color: var(--white);
+            outline: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'ZCOOL KuaiLe', cursive, sans-serif;
+            letter-spacing: 1px;
+            text-decoration: none; /* 修正 a 標籤的底線 */
+        }
+
+        .btn-nav {
+            padding: 8px 24px;
+            border-radius: 20px;
+            font-size: 1rem;
+            background: linear-gradient(to bottom, var(--primary-color), #0277bd);
+            box-shadow: 
+                0 4px 0 var(--primary-dark), 
+                0 5px 5px rgba(0,0,0,0.2);
+        }
+
+        .btn-nav:hover {
+            background: linear-gradient(to bottom, #38bdf8, var(--primary-color));
+            top: -1px;
+        }
+
+        .btn-nav:active {
+            transform: translateY(4px);
+            box-shadow: 
+                0 0 0 var(--primary-dark), 
+                inset 0 2px 5px rgba(0,0,0,0.2);
+            top: 0;
+        }
+
+        /* --- 主要內容區 --- */
+        main {
+            flex: 1;
+            padding: 40px 20px;
+            width: 100%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+        }
+
+        .page-title {
+            text-align: center;
+            color: var(--primary-dark);
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 0px rgba(255,255,255,0.5);
+        }
+
+        /* --- 概覽卡片區域 --- */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .summary-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            border: 2px solid #e2e8f0;
+            transition: transform 0.3s;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+
+        .card-label {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .card-amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* 特殊顏色 */
+        .amount-income { color: var(--success-color); }
+        .amount-expense { color: var(--primary-color); }
+        .amount-balance { color: var(--text-main); }
+        .amount-negative { color: var(--danger-color); } /* 負數紅色 */
+
+        /* --- 列表區域 --- */
+        .details-section {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+            border: 2px solid #e2e8f0;
+        }
+
+        .section-header {
+            font-size: 1.4rem;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            border-bottom: 2px dashed #e2e8f0;
+            padding-bottom: 15px;
+        }
+
+        .expense-list {
+            list-style: none;
+        }
+
+        .expense-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 10px;
+            border-bottom: 1px solid #f1f5f9;
+            transition: background 0.2s;
+            border-radius: 12px;
+        }
+
+        .expense-item:last-child {
+            border-bottom: none;
+        }
+
+        .expense-item:hover {
+            background-color: #f8fafc;
+        }
+
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .item-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #e0f2fe;
+            color: var(--primary-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .item-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .item-amount {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        /* --- 響應式設計 --- */
+        @media (max-width: 600px) {
+            .summary-grid {
+                grid-template-columns: 1fr; /* 手機版改為單欄 */
+            }
+            .summary-card {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 15px 25px;
+            }
+            .card-label { margin-bottom: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 導航欄 (連結回 index.html) -->
+    <header>
+        <nav>
+            <!-- 點擊 Logo 回首頁 -->
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-piggy-bank"></i>
+                日常收支记账
+            </a>
+            <!-- 返回首頁按鈕 -->
+            <a href="index.html" class="btn-3d btn-nav">回首頁</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1 class="page-title">本月財務概況</h1>
+
+        <!-- 數據概覽卡片 -->
+        <section class="summary-grid">
+            <div class="summary-card">
+                <div class="card-label">本月總收入</div>
+                <div class="card-amount amount-income" id="total-income">+ 0 元</div>
+            </div>
+            <div class="summary-card">
+                <div class="card-label">本月總支出</div>
+                <div class="card-amount amount-expense" id="total-expense">- 0 元</div>
+            </div>
+            <div class="summary-card">
+                <div class="card-label">本月結餘</div>
+                <div class="card-amount amount-balance" id="total-balance">0 元</div>
+            </div>
+        </section>
+
+        <!-- 支出明細列表 -->
+        <section class="details-section">
+            <h2 class="section-header">支出分類明細</h2>
+            <ul class="expense-list" id="expense-list-container">
+                <!-- 列表項目將由 JS 根據數據動態生成 -->
+                <!-- 例如:
+                <li class="expense-item">
+                    <div class="item-info">
+                        <div class="item-icon"><i class="fa-solid fa-utensils"></i></div>
+                        <span class="item-name">餐飲</span>
+                    </div>
+                    <span class="item-amount">- 2,500 元</span>
+                </li>
+                -->
+            </ul>
+        </section>
+    </main>
+
+    <script>
+        // --- 模擬數據 ---
+        // 您可以修改這裡的數字來測試效果
+        const income = 35000;
+        
+        const expenses = {
+            "餐飲": 4500,
+            "交通": 1200,
+            "学习/娱乐": 2300,
+            "其他": 0 // 這裡設為 0，測試"如果不顯示"的功能
+        };
+
+        // --- DOM 元素 ---
+        const incomeEl = document.getElementById('total-income');
+        const expenseEl = document.getElementById('total-expense');
+        const balanceEl = document.getElementById('total-balance');
+        const listContainer = document.getElementById('expense-list-container');
+
+        // --- 圖示映射 ---
+        const icons = {
+            "餐飲": "fa-utensils",
+            "交通": "fa-bus",
+            "学习/娱乐": "fa-gamepad",
+            "其他": "fa-box-open"
+        };
+
+        // --- 邏輯處理 ---
+
+        // 1. 計算總支出
+        let totalExpense = 0;
+        for (let key in expenses) {
+            totalExpense += expenses[key];
+        }
+
+        // 2. 計算結餘
+        const balance = income - totalExpense;
+
+        // 3. 更新頂部卡片數字
+        incomeEl.textContent = `+ ${income.toLocaleString()} 元`;
+        expenseEl.textContent = `- ${totalExpense.toLocaleString()} 元`;
+        
+        if (balance >= 0) {
+            balanceEl.textContent = `+ ${balance.toLocaleString()} 元`;
+            balanceEl.classList.remove('amount-negative');
+        } else {
+            // 如果是負數
+            balanceEl.textContent = `${balance.toLocaleString()} 元`;
+            balanceEl.classList.add('amount-negative'); // 加上紅色 class
+        }
+
+        // 4. 生成支出列表 (只顯示花費 > 0 的項目)
+        for (let [category, amount] of Object.entries(expenses)) {
+            if (amount > 0) {
+                const iconClass = icons[category] || "fa-circle"; // 取得對應圖標
+                
+                const li = document.createElement('li');
+                li.className = 'expense-item';
+                li.innerHTML = `
+                    <div class="item-info">
+                        <div class="item-icon">
+                            <i class="fa-solid ${iconClass}"></i>
+                        </div>
+                        <span class="item-name">${category}</span>
+                    </div>
+                    <span class="item-amount">- ${amount.toLocaleString()} 元</span>
+                `;
+                listContainer.appendChild(li);
+            }
+        }
+    </script>
+</body>
+</html>

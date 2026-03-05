@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html lang="zh-TW"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>日常收支記帳 - 您的個人財務管家</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Pangolin&amp;family=ZCOOL+KuaiLe&amp;family=Noto+Sans+TC:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1e40af",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Pangolin", "ZCOOL KuaiLe", "Noto Sans TC", "sans-serif"],
+                        "body": ["Pangolin", "Noto Sans TC", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "2xl": "1.5rem",
+                        "3xl": "2rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Pangolin', 'ZCOOL KuaiLe', 'Noto Sans TC', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'ZCOOL KuaiLe', 'Pangolin', sans-serif;
+        }
+    </style>
+<style>
+        body {
+            font-family: 'Pangolin', 'ZCOOL KuaiLe', 'Noto Sans TC', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'ZCOOL KuaiLe', 'Pangolin', sans-serif;
+        }
+    </style></head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100">
+<div class="relative flex min-h-screen flex-col overflow-x-hidden">
+<!-- Header -->
+<header class="sticky top-0 z-50 w-full border-b border-primary/10 bg-background-light/80 backdrop-blur-md dark:bg-background-dark/80">
+<div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
+<div class="flex items-center gap-3">
+<div class="flex h-10 w-10 items-center justify-center bg-primary text-white rounded-xl">
+<span class="material-symbols-outlined text-2xl">account_balance_wallet</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight text-primary">日常收支記帳</h2>
+</div>
+<nav class="hidden md:flex items-center gap-10">
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#features">功能介紹</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#workflow">使用流程</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#team">團隊介紹</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="secondpage.html">收支明細</a>
+</nav>
+<div class="flex items-center gap-4">
+<a href="secondpage.html" class="rounded-full px-6 py-2 text-sm font-bold text-white hover:bg-primary/90 transition-all btn-3d btn-3d-primary tracking-wide">
+                        立即開始
+                    </a>
+</div>
+</div>
+</header>
+<main class="flex-1">
+<!-- Hero Section -->
+<section class="relative overflow-hidden px-6 py-20 lg:px-10 lg:py-32">
+<div class="mx-auto max-w-7xl">
+<div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+<div class="flex flex-col gap-8">
+<div class="space-y-4">
+<h1 class="text-5xl font-black leading-[1.1] tracking-tight text-slate-900 dark:text-white lg:text-7xl">
+                                    日常收支記帳<br/>
+<span class="text-primary">掌控每一分錢</span>
+</h1>
+<p class="max-w-[540px] text-lg leading-relaxed text-slate-600 dark:text-slate-400">
+                                    輕鬆追蹤每一筆收支，視覺化您的財務生活。讓理財變得簡單、直覺且高效，從今天開始建立健康的財務習慣。
+                                </p>
+</div>
+<div class="flex flex-wrap gap-4">
+<button class="rounded-xl px-8 py-4 text-lg font-bold text-white shadow-lg shadow-primary/20 hover:scale-105 transition-transform btn-3d btn-3d-primary tracking-wide">
+                                    免費開始使用
+                                </button>
+<button class="rounded-xl border border-primary/20 px-8 py-4 text-lg font-bold text-primary hover:bg-primary/10 transition-colors btn-3d btn-3d-secondary tracking-wide">
+                                    查看演示
+                                </button>
+</div>
+</div>
+<div class="relative">
+<div class="aspect-square w-full bg-gradient-to-br from-primary/30 to-primary/10 p-4 ring-1 ring-primary/30 rounded-[2.5rem]">
+<div class="h-full w-full rounded-2xl bg-white dark:bg-slate-800 shadow-2xl flex items-center justify-center overflow-hidden" data-alt="Modern financial dashboard interface showing charts and balance" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCEskaqyx7h4g0MBgRxyBBWGg8TDBgxV45uEC9QTWvfUgvKeIz72_VNxW0N0-lNvs9kmAkpUzrKuYzY0MNPvAO-7qzyzndmKGt-5c44YP4PZBVPyLr-hdpTvAuPX-AqGdqCRUHzb2QBtQHHuxMaioeoU-UCOMBtXuFIotuoexecYLdy6NjUbLzba6xgp2wA_98jsb7x_OhHGN5LogBiUxLx2-8eV96llmXHs7SwHF6mL7UCPSzjqJmOYgoNbzA3E5y7Stw1gqyELek')">
+</div>
+</div>
+<!-- Decorative element -->
+<div class="absolute -bottom-6 -left-6 h-32 w-32 rounded-2xl bg-primary/10 blur-2xl"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Problem Section -->
+<section class="bg-primary/10 px-6 py-24 lg:px-10">
+<div class="mx-auto max-w-7xl">
+<div class="mb-16 max-w-2xl">
+<h2 class="mb-4 text-3xl font-black tracking-tight lg:text-4xl">解決您的記帳痛點</h2>
+<p class="text-slate-600 dark:text-slate-400">告別混亂的帳目，我們為您解決最常見的理財難題。</p>
+</div>
+<div class="grid gap-8 md:grid-cols-2">
+<div class="flex flex-col gap-6 rounded-2xl border border-primary/10 bg-white p-8 shadow-sm dark:bg-slate-800">
+<div class="flex h-14 w-14 items-center justify-center rounded-xl bg-red-50 text-red-500 dark:bg-red-500/10">
+<span class="material-symbols-outlined text-3xl">timer_off</span>
+</div>
+<div>
+<h3 class="mb-2 text-xl font-bold">手動記錄易遺漏</h3>
+<p class="text-slate-600 dark:text-slate-400">傳統記帳繁瑣，月底總是對不上帳？我們的快速輸入介面讓您隨時隨地，幾秒鐘內就能完成一筆記錄，不再漏掉任何細節。</p>
+</div>
+</div>
+<div class="flex flex-col gap-6 rounded-2xl border border-primary/10 bg-white p-8 shadow-sm dark:bg-slate-800">
+<div class="flex h-14 w-14 items-center justify-center rounded-xl bg-amber-50 text-amber-500 dark:bg-amber-500/10">
+<span class="material-symbols-outlined text-3xl">query_stats</span>
+</div>
+<div>
+<h3 class="mb-2 text-xl font-bold">支出比例不明確</h3>
+<p class="text-slate-600 dark:text-slate-400">看不出錢都花在哪裡？單靠數字難以理解消費模式。我們的視覺化圖表自動分類，讓您的消費分佈與收支比例一目了然。</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Feature Introduction -->
+<section class="px-6 py-24 lg:px-10" id="features">
+<div class="mx-auto max-w-7xl text-center">
+<h2 class="mb-16 text-3xl font-black tracking-tight lg:text-4xl">核心功能</h2>
+<div class="grid gap-8 md:grid-cols-3">
+<!-- Feature 1 -->
+<div class="group relative border border-primary/10 bg-white p-10 transition-all hover:shadow-xl dark:bg-slate-800 rounded-[2.5rem]">
+<div class="mb-8 flex justify-center text-primary">
+<div class="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/10 transition-transform group-hover:scale-110">
+<span class="material-symbols-outlined text-4xl">bolt</span>
+</div>
+</div>
+<h3 class="mb-4 text-2xl font-bold">快速記錄</h3>
+<p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                                一鍵輸入金額、類別與備註。智慧分類建議，讓您在最短的時間內完成記帳，維持習慣毫不費力。
+                            </p>
+</div>
+<!-- Feature 2 -->
+<div class="group relative border border-primary/10 bg-white p-10 transition-all hover:shadow-xl dark:bg-slate-800 rounded-[2.5rem]">
+<div class="mb-8 flex justify-center text-primary">
+<div class="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/10 transition-transform group-hover:scale-110">
+<span class="material-symbols-outlined text-4xl">analytics</span>
+</div>
+</div>
+<h3 class="mb-4 text-2xl font-bold">自動統計</h3>
+<p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                                即時計算收支平衡與類別比例。透過精美的圓餅圖與趨勢圖，掌握您的財務健康度與結餘狀況。
+                            </p>
+</div>
+<!-- Feature 3 -->
+<div class="group relative border border-primary/10 bg-white p-10 transition-all hover:shadow-xl dark:bg-slate-800 rounded-[2.5rem]">
+<div class="mb-8 flex justify-center text-primary">
+<div class="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/10 transition-transform group-hover:scale-110">
+<span class="material-symbols-outlined text-4xl">verified_user</span>
+</div>
+</div>
+<h3 class="mb-4 text-2xl font-bold">永久儲存</h3>
+<p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                                數據儲存於您的設備本地，極致隱私安全。支援同步備份，確保您的珍貴財務紀錄永不遺失。
+                            </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Workflow Section -->
+<section class="bg-slate-900 px-6 py-24 text-white lg:px-10" id="workflow">
+<div class="mx-auto max-w-7xl">
+<div class="mb-20 text-center">
+<h2 class="text-3xl font-black tracking-tight lg:text-4xl">簡單三步，開始理財</h2>
+</div>
+<div class="relative grid gap-12 md:grid-cols-3">
+<!-- Connecting Line (Desktop) -->
+<div class="absolute top-1/2 left-0 hidden h-0.5 w-full -translate-y-1/2 bg-primary/20 md:block"></div>
+<!-- Step 1 -->
+<div class="relative z-10 flex flex-col items-center gap-6">
+<div class="flex h-20 w-20 items-center justify-center rounded-full bg-primary text-3xl font-black shadow-lg shadow-primary/30">1</div>
+<div class="text-center">
+<h3 class="mb-3 text-xl font-bold">記錄收支</h3>
+<p class="text-slate-400">每天花一分鐘，隨手記下您的每一筆消費與收入。</p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="relative z-10 flex flex-col items-center gap-6">
+<div class="flex h-20 w-20 items-center justify-center rounded-full bg-primary text-3xl font-black shadow-lg shadow-primary/30">2</div>
+<div class="text-center">
+<h3 class="mb-3 text-xl font-bold">查看統計</h3>
+<p class="text-slate-400">系統自動生成報表，隨時查看本月盈餘與消費分佈。</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="relative z-10 flex flex-col items-center gap-6">
+<div class="flex h-20 w-20 items-center justify-center rounded-full bg-primary text-3xl font-black shadow-lg shadow-primary/30">3</div>
+<div class="text-center">
+<h3 class="mb-3 text-xl font-bold">分析習慣</h3>
+<p class="text-slate-400">根據趨勢分析調整預算，一步步邁向財務自由。</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Team Introduction -->
+<section class="px-6 py-24 lg:px-10" id="team">
+<div class="mx-auto max-w-4xl text-center">
+<div class="mb-12 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-bold text-primary">
+<span class="material-symbols-outlined text-sm">group</span>
+                        關於我們
+                    </div>
+<h2 class="mb-8 text-3xl font-black tracking-tight lg:text-4xl">打造最好的記帳體驗</h2>
+<p class="mb-12 text-lg text-slate-600 dark:text-slate-400">
+                        我們致力於簡化個人理財流程，讓每個人都能輕鬆掌握自己的財務狀況。
+                    </p>
+<div class="flex items-center justify-center gap-4">
+<div class="flex flex-col items-center">
+<div class="h-20 w-20 rounded-full bg-gradient-to-tr from-primary to-blue-400 p-1">
+<div class="h-full w-full rounded-full bg-white dark:bg-slate-800 flex items-center justify-center overflow-hidden" data-alt="Portrait of team member venus" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCKL2igsi2OQPOtE4Rnjf8hn0pPGVXFAOu1vpRVFN0cbXWOE58WzyMKbBXj_BOlNhkQjlCYSZcTjJjrBcLjOnGDTk_t4cH_-JpJFDbZcyAs0NTHJaW0UmXhl8bUlIt_eZ7WLYmpcaIZ15ZKLYJBpHhG1FXZ2bLgYnVGYuAB_qTwL3Bjuv1hkItTTdTfmsm-DUyEl2Y8x3gn3aeX5Fhs7gIWlBVoP5zGjtUvJptJH9WR8Kf0qdwZmiDopax5bNPD8LT0OP9SnKsTJ3E')"></div>
+</div>
+<span class="mt-4 font-bold">venus</span>
+</div>
+<div class="h-0.5 w-12 bg-primary/10"></div>
+<div class="flex flex-col items-center">
+<div class="h-20 w-20 rounded-full bg-gradient-to-tr from-primary to-blue-400 p-1">
+<div class="h-full w-full rounded-full bg-white dark:bg-slate-800 flex items-center justify-center overflow-hidden" data-alt="Portrait of team member giana" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDRVGSnZMQGCYwm2t9UgwVJeYPa464D_pQj7AyqqndMlIKTgemL2qPkS695IXtxQlZAF9M-IPa7LkQeR5M365f_9q-SdINGag-xwdZgkhffQGAvql_eKaXUcM4mHy8xqc_VqUcqwixwukIdWcuf33IhyrXGwRRyixZR5Zz_CVME9rYPOgT3PiXzXj2juq5ujJVGzAuIQlsRoQugA-zH4hwjWmvYutukIvWqHGjwru7ekF3rKZl74tJcyoK8Ax1GhhSXWfLq-oHEZ2I')"></div>
+</div>
+<span class="mt-4 font-bold">giana</span>
+</div>
+</div>
+<p class="mt-8 text-sm font-medium text-slate-400 italic">Made with ❤️ by venus and giana</p>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="border-t border-primary/10 bg-white px-6 py-12 dark:bg-slate-900 lg:px-10">
+<div class="mx-auto max-w-7xl">
+<div class="flex flex-col items-center justify-between gap-8 md:flex-row">
+<div class="flex items-center gap-3">
+<div class="flex h-8 w-8 items-center justify-center bg-primary text-white rounded-lg">
+<span class="material-symbols-outlined text-lg">account_balance_wallet</span>
+</div>
+<span class="text-xl font-bold tracking-tight">日常收支記帳</span>
+</div>
+<div class="flex gap-8 text-sm font-medium text-slate-500">
+<a class="hover:text-primary" href="#">隱私權條款</a>
+<a class="hover:text-primary" href="#">服務協議</a>
+<a class="hover:text-primary" href="#">聯繫我們</a>
+</div>
+<div class="flex gap-4">
+<a class="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-600 hover:bg-primary hover:text-white transition-all dark:bg-slate-800" href="#">
+<span class="material-symbols-outlined">share</span>
+</a>
+<a class="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-600 hover:bg-primary hover:text-white transition-all dark:bg-slate-800" href="#">
+<span class="material-symbols-outlined">alternate_email</span>
+</a>
+</div>
+</div>
+<div class="mt-12 border-t border-primary/5 pt-8 text-center text-sm text-slate-400">
+                    © 2024 日常收支記帳. All rights reserved.
+                </div>
+</div>
+</footer>
+</div>
+</body></html>
