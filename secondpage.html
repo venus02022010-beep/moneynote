@@ -429,10 +429,10 @@
         const initialIncome = 35000;
         
         const expenses = {
-            "餐飲": 4500,
-            "交通": 1200,
-            "学习/娱乐": 2300,
-            "其他": 0 // 這裡設為 0，測試"如果不顯示"的功能
+            "餐飲": 0,
+            "交通": 0,
+            "学习/娱乐": 0,
+            "其他": 0
         };
 
         // --- DOM 元素 ---
@@ -474,33 +474,31 @@
             balanceEl.classList.add('amount-negative'); // 加上紅色 class
         }
 
-        // 4. 生成支出列表 (只顯示花費 > 0 的項目)
+        // 4. 生成支出列表 (顯示所有支出分類，即使金額為 0)
         for (let [category, amount] of Object.entries(expenses)) {
-            if (amount > 0) {
-                const iconClass = icons[category] || "fa-circle"; // 取得對應圖標
-                
-                const li = document.createElement('li');
-                li.className = 'expense-item';
-                li.innerHTML = `
-                    <div class="item-info">
-                        <div class="item-icon">
-                            <i class="fa-solid ${iconClass}"></i>
-                        </div>
-                        <span class="item-name">${category}</span>
+            const iconClass = icons[category] || "fa-circle"; // 取得對應圖標
+            
+            const li = document.createElement('li');
+            li.className = 'expense-item';
+            li.innerHTML = `
+                <div class="item-info">
+                    <div class="item-icon">
+                        <i class="fa-solid ${iconClass}"></i>
                     </div>
-                    <div class="item-amount-input">
-                        <span class="currency-sign">-</span>
-                        <input type="number"
-                               class="expense-input"
-                               data-category="${category}"
-                               value="${amount}"
-                               min="0"
-                               step="100">
-                        <span class="currency-unit">元</span>
-                    </div>
-                `;
-                listContainer.appendChild(li);
-            }
+                    <span class="item-name">${category}</span>
+                </div>
+                <div class="item-amount-input">
+                    <span class="currency-sign">-</span>
+                    <input type="number"
+                           class="expense-input"
+                           data-category="${category}"
+                           value="${amount}"
+                           min="0"
+                           step="100">
+                    <span class="currency-unit">元</span>
+                </div>
+            `;
+            listContainer.appendChild(li);
         }
 
         // 5. 為所有輸入框添加事件監聽器
