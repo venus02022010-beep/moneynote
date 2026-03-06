@@ -293,6 +293,46 @@
             color: var(--text-secondary);
         }
 
+        /* 收入輸入區域 */
+        .income-input-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px dashed #e2e8f0;
+        }
+
+        .income-input-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 10px;
+            border-radius: 12px;
+            background-color: #f8fafc;
+            transition: background 0.2s;
+        }
+
+        .income-input-item:hover {
+            background-color: #f1f5f9;
+        }
+
+        .income-input {
+            width: 120px;
+            padding: 8px 12px;
+            border: 2px solid #d1fae5;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--success-color);
+            text-align: right;
+            background-color: white;
+            transition: all 0.2s;
+        }
+
+        .income-input:focus {
+            outline: none;
+            border-color: var(--success-color);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
         /* --- 響應式設計 --- */
         @media (max-width: 600px) {
             .summary-grid {
@@ -357,13 +397,36 @@
                 </li>
                 -->
             </ul>
+            
+            <!-- 收入輸入欄 -->
+            <div class="income-input-section" style="margin-top: 30px; padding-top: 20px; border-top: 2px dashed #e2e8f0;">
+                <h3 class="section-header" style="font-size: 1.2rem; margin-bottom: 15px;">收入設定</h3>
+                <div class="income-input-item">
+                    <div class="item-info">
+                        <div class="item-icon" style="background-color: #d1fae5;">
+                            <i class="fa-solid fa-money-bill-wave" style="color: #10b981;"></i>
+                        </div>
+                        <span class="item-name">本月收入</span>
+                    </div>
+                    <div class="item-amount-input">
+                        <span class="currency-sign" style="color: #10b981;">+</span>
+                        <input type="number"
+                               class="income-input"
+                               id="income-input"
+                               value="35000"
+                               min="0"
+                               step="1000">
+                        <span class="currency-unit">元</span>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
 
     <script>
         // --- 模擬數據 ---
         // 您可以修改這裡的數字來測試效果
-        const income = 35000;
+        const initialIncome = 35000;
         
         const expenses = {
             "餐飲": 4500,
@@ -377,6 +440,7 @@
         const expenseEl = document.getElementById('total-expense');
         const balanceEl = document.getElementById('total-balance');
         const listContainer = document.getElementById('expense-list-container');
+        const incomeInput = document.getElementById('income-input');
 
         // --- 圖示映射 ---
         const icons = {
@@ -395,10 +459,10 @@
         }
 
         // 2. 計算結餘
-        const balance = income - totalExpense;
+        const balance = initialIncome - totalExpense;
 
         // 3. 更新頂部卡片數字
-        incomeEl.textContent = `+ ${income.toLocaleString()} 元`;
+        incomeEl.textContent = `+ ${initialIncome.toLocaleString()} 元`;
         expenseEl.textContent = `- ${totalExpense.toLocaleString()} 元`;
         
         if (balance >= 0) {
@@ -446,8 +510,15 @@
             input.addEventListener('change', updateTotals);
         });
 
-        // 6. 更新總計的函數
+        // 6. 為收入輸入框添加事件監聽器
+        incomeInput.addEventListener('input', updateTotals);
+        incomeInput.addEventListener('change', updateTotals);
+
+        // 7. 更新總計的函數
         function updateTotals() {
+            // 獲取當前收入值
+            const currentIncome = parseFloat(incomeInput.value) || 0;
+            
             // 重新計算總支出
             let newTotalExpense = 0;
             const expenseInputs = document.querySelectorAll('.expense-input');
@@ -458,9 +529,10 @@
             });
 
             // 重新計算結餘
-            const newBalance = income - newTotalExpense;
+            const newBalance = currentIncome - newTotalExpense;
 
             // 更新頂部卡片顯示
+            incomeEl.textContent = `+ ${currentIncome.toLocaleString()} 元`;
             expenseEl.textContent = `- ${newTotalExpense.toLocaleString()} 元`;
             
             if (newBalance >= 0) {
