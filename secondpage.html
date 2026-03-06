@@ -256,6 +256,43 @@
             color: var(--primary-color);
         }
 
+        .item-amount-input {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .expense-input {
+            width: 120px;
+            padding: 8px 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-align: right;
+            background-color: #f8fafc;
+            transition: all 0.2s;
+        }
+
+        .expense-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
+        }
+
+        .currency-sign {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .currency-unit {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
         /* --- 響應式設計 --- */
         @media (max-width: 600px) {
             .summary-grid {
@@ -387,9 +424,51 @@
                         </div>
                         <span class="item-name">${category}</span>
                     </div>
-                    <span class="item-amount">- ${amount.toLocaleString()} 元</span>
+                    <div class="item-amount-input">
+                        <span class="currency-sign">-</span>
+                        <input type="number"
+                               class="expense-input"
+                               data-category="${category}"
+                               value="${amount}"
+                               min="0"
+                               step="100">
+                        <span class="currency-unit">元</span>
+                    </div>
                 `;
                 listContainer.appendChild(li);
+            }
+        }
+
+        // 5. 為所有輸入框添加事件監聽器
+        const expenseInputs = document.querySelectorAll('.expense-input');
+        expenseInputs.forEach(input => {
+            input.addEventListener('input', updateTotals);
+            input.addEventListener('change', updateTotals);
+        });
+
+        // 6. 更新總計的函數
+        function updateTotals() {
+            // 重新計算總支出
+            let newTotalExpense = 0;
+            const expenseInputs = document.querySelectorAll('.expense-input');
+            
+            expenseInputs.forEach(input => {
+                const value = parseFloat(input.value) || 0;
+                newTotalExpense += value;
+            });
+
+            // 重新計算結餘
+            const newBalance = income - newTotalExpense;
+
+            // 更新頂部卡片顯示
+            expenseEl.textContent = `- ${newTotalExpense.toLocaleString()} 元`;
+            
+            if (newBalance >= 0) {
+                balanceEl.textContent = `+ ${newBalance.toLocaleString()} 元`;
+                balanceEl.classList.remove('amount-negative');
+            } else {
+                balanceEl.textContent = `${newBalance.toLocaleString()} 元`;
+                balanceEl.classList.add('amount-negative');
             }
         }
     </script>
